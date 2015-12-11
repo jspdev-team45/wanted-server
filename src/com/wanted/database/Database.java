@@ -195,7 +195,7 @@ public class Database {
 			pstmt.setString(3, email);
 			pstmt.setInt(4, role);
 			pstmt.setString(5, null);
-			pstmt.setString(6, null);
+			pstmt.setString(6, "default.jpg");
 			pstmt.setString(7, null);
 			pstmt.executeUpdate();
 			try (ResultSet result = pstmt.getGeneratedKeys()) {
