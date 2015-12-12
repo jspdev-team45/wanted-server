@@ -1,3 +1,4 @@
+// The servlet that deals with returning the following list from the database
 package com.wanted.ws.remote;
 
 import java.io.IOException;

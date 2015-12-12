@@ -1,3 +1,4 @@
+// The class that generate the image file path
 package com.wanted.util;
 
 /**

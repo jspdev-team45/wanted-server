@@ -1,3 +1,4 @@
+// The servlet that deals with inserting the application record
 package com.wanted.ws.remote;
 
 import java.io.IOException;

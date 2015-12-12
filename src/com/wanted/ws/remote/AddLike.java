@@ -1,3 +1,4 @@
+// The servlet that deals with inserting the record in favorite list into database
 package com.wanted.ws.remote;
 
 import java.io.IOException;

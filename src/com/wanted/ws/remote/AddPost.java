@@ -1,3 +1,4 @@
+// The servlet that deals with inserting the post record into the database
 package com.wanted.ws.remote;
 
 import java.io.IOException;

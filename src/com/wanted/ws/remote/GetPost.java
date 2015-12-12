@@ -1,3 +1,4 @@
+// The servlet that deals with returning more job posts asked by a user
 package com.wanted.ws.remote;
 
 import java.io.IOException;

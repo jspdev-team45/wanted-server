@@ -1,3 +1,4 @@
+// The servlet that deals with deleting the post record into the database
 package com.wanted.ws.remote;
 
 import java.io.IOException;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.wanted.database.Database;
 import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
-import com.wanted.entities.Post;
 
 /**
  * Servlet implementation class DeletePost

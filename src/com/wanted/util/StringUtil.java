@@ -1,3 +1,4 @@
+// This class is used to generate the MD5 hashcode and return the image folder
 package com.wanted.util;
 
 public class StringUtil {

@@ -1,3 +1,4 @@
+// This class deals with the login request from the client
 package com.wanted.ws.remote;
 
 import java.io.IOException;

@@ -1,3 +1,4 @@
+// The Util function that get the real path of the database properties file
 package com.wanted.util;
 
 import javax.servlet.ServletContext;

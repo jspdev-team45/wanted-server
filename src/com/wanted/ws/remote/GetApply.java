@@ -1,3 +1,4 @@
+// The servlet that deals with getting the applicant list into the database
 package com.wanted.ws.remote;
 
 import java.io.IOException;

@@ -1,3 +1,4 @@
+// This class deals with the request the update the company information
 package com.wanted.ws.remote;
 
 import java.io.BufferedOutputStream;

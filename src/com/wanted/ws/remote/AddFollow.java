@@ -1,3 +1,4 @@
+// The servlet that deals with inserting following relationship into database 
 package com.wanted.ws.remote;
 
 import java.io.IOException;

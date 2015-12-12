@@ -1,3 +1,4 @@
+// The servlet that deals with returning the post list published by a specific user 
 package com.wanted.ws.remote;
 
 import java.io.IOException;

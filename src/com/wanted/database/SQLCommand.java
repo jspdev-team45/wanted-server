@@ -1,3 +1,4 @@
+// This class is used to return the SQL command
 package com.wanted.database;
 
 import java.io.FileInputStream;

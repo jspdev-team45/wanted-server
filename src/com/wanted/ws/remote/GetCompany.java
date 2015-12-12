@@ -1,3 +1,4 @@
+// The servlet that deals with getting the company record from the database
 package com.wanted.ws.remote;
 
 import java.io.IOException;

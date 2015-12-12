@@ -1,3 +1,5 @@
+// This class is used for performing database operations
+
 package com.wanted.database;
 
 import java.io.FileInputStream;
@@ -31,6 +33,9 @@ public class Database {
 	private String username;
 	private String password;
 	
+	/**
+	 * the default constructor that initialize the database
+	 */
 	public Database() {
 		cmd = new SQLCommand();
 		try (FileInputStream in = new FileInputStream(fileName)) {
@@ -48,6 +53,9 @@ public class Database {
 		}
 	}
 
+	/**
+	 * initialize the database with the database properties file path 
+	 */
 	public Database(String dbFile, String sqlFile) {
 		this.fileName = dbFile;
 		cmd = new SQLCommand(sqlFile);
@@ -258,6 +266,9 @@ public class Database {
 		return id;
 	}
 	
+	/**
+	 * The function that insert company record into the database 
+	 */
 	public int insertCompany(Company company) {
 		if (findCompanyIDByName(company.getName()) != -1) {
 			System.out.println("Existed company in database!");
@@ -282,6 +293,9 @@ public class Database {
 		return id;
 	}
 	
+	/**
+	 * Insert the experience record into the database 
+	 */
 	public int insertExperience(Experience exper) {
 		int id = -1;
 		try (Connection conn = getConnection(); 
@@ -302,6 +316,9 @@ public class Database {
 		return id;
 	}
 	
+	/**
+	 * Insert the Post record into the database 
+	 */
 	public int insertPost(Post post) {
 		int id = -1;
 		try (Connection conn = getConnection(); 
@@ -402,7 +419,7 @@ public class Database {
 	}
 	
 	/**
-	 * Update recruiter infomration
+	 * Update recruiter information
 	 * @param uid
 	 * @param cid
 	 * @param dept
@@ -421,6 +438,9 @@ public class Database {
 		}	
 	}
 	
+	/**
+	 * Update company information
+	 */
 	public void updateCompany(int cid, String cname, String bannerPath, String descript, String location) {
 		if (cid == -1) {
 			cid = insertCompany(new Company(cname, bannerPath, descript, location));
@@ -439,6 +459,9 @@ public class Database {
 		}	
 	}
 	
+	/**
+	 * Update Experience record information in the database
+	 */
 	public void updateExperience(int pid, String startTime, String endTime, String descript) {
 		try (Connection conn = getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(cmd.updateExper())) {
@@ -452,6 +475,9 @@ public class Database {
 		}	
 	}
 	
+	/**
+	 * Update Post information in the database
+	 */
 	public void updatePost(int pid, String title, String descript) {
 		try (Connection conn = getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(cmd.updatePost())) {
@@ -464,12 +490,16 @@ public class Database {
 		}	
 	}
 	
+	/**
+	 * Given the user id and password, check if the user is valid 
+	 */
 	public int getRoleAndCheckPass(int uid, String password) {
 		int role = -1;
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getUserById())) {
 			pstmt.setInt(1, uid);
 			ResultSet set = pstmt.executeQuery();
 			if(set.next()) {
+				// if role is -1, the user password is wrong
 				if (password.equals(set.getString(3))) {
 					role = set.getInt(5);
 				}
@@ -557,7 +587,7 @@ public class Database {
 	}
 	
 	/**
-	 * 
+	 * Check if the image existed in server given by the hash value of the image
 	 * @param hash
 	 * @return
 	 */
@@ -597,6 +627,9 @@ public class Database {
 		return name;
 	}
 	
+	/**
+	 * Get company object by company id
+	 */
 	public Company getCompany(int cid) { 
 		Company company = new Company();
 		try (Connection conn = getConnection(); 
@@ -615,6 +648,9 @@ public class Database {
 		return company;
 	}
 	
+	/**
+	 * Get company object by user id
+	 */
 	public Company getCompanyByUId(int uid) {
 		Company company = null;
 		try (Connection conn = getConnection(); 
@@ -629,7 +665,10 @@ public class Database {
 		}
 		return company;
 	}
-	
+
+	/**
+	 * Get banner path by the hash value of the image
+	 */
 	public String getBannerByHash(byte[] hash) {
 		String bannerPath = null;
 		try (Connection conn = getConnection(); 
@@ -647,6 +686,9 @@ public class Database {
 		return bannerPath;
 	}
 	
+	/**
+	 * Get the experience list of a specific user 
+	 */
 	public List<Experience> getExperienceOfUser(int uid, int type) {
 		List<Experience> expList = new ArrayList<Experience>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getExperByUId())) {
@@ -664,7 +706,9 @@ public class Database {
 		return expList;
 	}
 
-	
+	/**
+	 * Get all the job posts published by a specific recruiter  
+	 */
 	public List<Post> getPostOfUser(int uid) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); 
@@ -682,6 +726,9 @@ public class Database {
 		return postList;
 	}
 	
+	/**
+	 * Deal with the request from the client that asks to load more job posts 
+	 */
 	public List<Post> getMorePost(int cursor, int maxFetch, String major) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getMorePost())) { 
@@ -702,6 +749,9 @@ public class Database {
 		return postList;
 	}
 
+	/**
+	 * Deal with the request from the client that asks to load new job posts 
+	 */
 	public List<Post> getNewPost(int maxFetch, String major) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getNewPost())) { 
@@ -721,6 +771,9 @@ public class Database {
 		return postList;
 	}
 	
+	/**
+	 * Deal with the request from the client that asks to load more people to display
+	 */
 	public List<User> getMorePeople(int id, int cursor, int maxFetch) {
 		List<User> userList = new ArrayList<User>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getMorePeople())) { 
@@ -765,6 +818,9 @@ public class Database {
 		return userList;
 	}
 	
+	/**
+	 * Deal with the request from the client that asks to load new people to display
+	 */
 	public List<User> getNewPeople(int id, int maxFetch) {
 		List<User> userList = new ArrayList<User>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getNewPeople())) { 
@@ -808,6 +864,9 @@ public class Database {
 		return userList;	
 	}
 
+	/**
+	 * Deal with the request from the recruiter that asks to load new posts published by a specific recruiter
+	 */
 	public List<Post> getMyNewPost(int uid, int maxFetch) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getMyNewPost())) { 
@@ -827,6 +886,9 @@ public class Database {
 		return postList;
 	}
 
+	/**
+	 * Deal with the request from the recruiter that asks to load more post published by a specific recruiter
+	 */
 	public List<Post> getMyMorePost(int uid, int cursor, int maxFetch) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getMyMorePost())) { 
@@ -847,6 +909,9 @@ public class Database {
 		return postList;
 	}
 	
+	/**
+	 * The function that inserts the following relationship between two users  
+	 */
 	public int insertFollow(int uid1, int uid2) {
 		int fid = -1;
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.insertFollow(), Statement.RETURN_GENERATED_KEYS)) {
@@ -859,6 +924,9 @@ public class Database {
 		return fid;
 	}
 	
+	/**
+	 * Get the following list of a specific user 
+	 */
 	public List<User> getFollowing(int id) {
 		List<User> userList = new ArrayList<User>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getFollowingById())) { 
@@ -888,6 +956,9 @@ public class Database {
 		return userList;	
 	}
 
+	/**
+	 * Get the follower list of a specific user 
+	 */
 	public List<User> getFollower(int id) {
 		List<User> userList = new ArrayList<User>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getFollowerById())) { 
@@ -918,6 +989,9 @@ public class Database {
 		return userList;	
 	}
 
+	/**
+	 * The function that inserts the favorite relationship between two users  
+	 */
 	public int insertLike(int uid, int pid) {
 		int lid = -1;
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.findLike())) {
@@ -941,6 +1015,9 @@ public class Database {
 		return lid;	
 	}
 	
+	/**
+	 * Get the favorite list of a specific user 
+	 */
 	public List<Post> getLike(int id) {
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getLikeById())) { 
@@ -967,6 +1044,9 @@ public class Database {
 		return postList;
 	}
 	
+	/**
+	 * Insert the application record into the database
+	 */
 	public int insertApply(int pid, int uid) {
 		int aid = -1;
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.findApply())) {
@@ -990,6 +1070,9 @@ public class Database {
 		return aid;	
 	}
 	
+	/**
+	 * Get the applicant list for a specific job post 
+	 */
 	public List<Seeker> getApply(int pid) {
 		List<Seeker> seekerList = new ArrayList<Seeker>();
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(cmd.getApplyById())) { 

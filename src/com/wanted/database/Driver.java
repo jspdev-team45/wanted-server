@@ -1,3 +1,4 @@
+// The driver that test the server side functionality
 package com.wanted.database;
 
 import java.sql.SQLException;
@@ -134,7 +135,7 @@ public class Driver {
 		
 		Post post6 = new Post("Searching for a software engineer", "Description description description", "Computer Science");
 		post6.setUid(id9);
-		int pid6 = database.insertPost(post6);
+		database.insertPost(post6);
 		
 		// insert follow
 		Seeker people10 = new Seeker("Annk", "1111111", "annk@aa.com", Role.SEEKER);
@@ -208,43 +209,5 @@ public class Driver {
 		database.insertApply(pid4, id2);
 		database.insertApply(pid5, id2);
 		database.insertApply(pid5, id2);
-		
-//		Seeker people10 = new Seeker("Annk", "1111111", "annk@aa.com", Role.SEEKER);
-//        people10.setAvatar("people_annk.jpg");
-//        people10.setPhone("111111");
-//        people10.setCollege("Carnegie Mellon University");
-//        people10.setMajor("Computer Science");
-//		int id10 = database.insertSeeker(people10);
-//		database.updateUser(id10, people10.getAvatar(), people10.getRealName(), people10.getPhone(), null);
-//		database.updateSeeker(id10, people10.getCollege(), people10.getMajor());
-//		
-//		Seeker people10 = new Seeker("Annk", "1111111", "annk@aa.com", Role.SEEKER);
-//        people10.setAvatar("people_annk.jpg");
-//        people10.setPhone("111111");
-//        people10.setCollege("Carnegie Mellon University");
-//        people10.setMajor("Computer Science");
-//		int id10 = database.insertSeeker(people10);
-//		database.updateUser(id10, people10.getAvatar(), people10.getRealName(), people10.getPhone(), null);
-//		database.updateSeeker(id10, people10.getCollege(), people10.getMajor());
-//		
-//		Seeker people10 = new Seeker("Annk", "1111111", "annk@aa.com", Role.SEEKER);
-//        people10.setAvatar("people_annk.jpg");
-//        people10.setPhone("111111");
-//        people10.setCollege("Carnegie Mellon University");
-//        people10.setMajor("Computer Science");
-//		int id10 = database.insertSeeker(people10);
-//		database.updateUser(id10, people10.getAvatar(), people10.getRealName(), people10.getPhone(), null);
-//		database.updateSeeker(id10, people10.getCollege(), people10.getMajor());
-		
-		// test delete
-//		database.deleteUser(id);
-		
-		// test update
-//		database.updateUser(2, null, "Li Gang", "4123535954", null);
-//		database.updateRecruiter(2, null, "HR");
-		
-		// test get
-//		Recruiter recruiter2 = database.getRecruiter(2);
-//		System.out.println(recruiter2.getDepartment());
 	}
 }
